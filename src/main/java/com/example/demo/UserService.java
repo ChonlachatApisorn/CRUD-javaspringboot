@@ -26,6 +26,23 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public UserEntity updateUser(String id, UserEntity updatedUser) {
+        Optional<UserEntity> userOptional = userRepository.findById(id);
 
-    // You can add other CRUD operations and custom queries here
+        if (userOptional.isPresent()) {
+            UserEntity existingUser = userOptional.get();
+            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setBirthday(updatedUser.getBirthday());
+
+            return userRepository.save(existingUser);
+        } else {
+            return null;
+        }
+    }
+
+    public void deleteUser(String ids) {
+        userRepository.deleteById(ids);
+    }
+
 }
